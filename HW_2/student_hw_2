@@ -1,0 +1,43 @@
+# 5.1 Write a command to a file task_1 which contains the symbol “1”.
+echo "1" > task_1
+printf "1" > task_1
+# 5.2 Write command to create a file task_2 with a size 1024 bytes.
+# # This should be one line command. The file task_2 content should be one line.
+dd if=/dev/zero of=task_2 bs=1 count=0 seek=1024
+head -c 1024 /dev/zero > task_2
+fallocate -l 1K task_2
+# 5.3 You should write a command which appends content from files task_1 to the file task_2.
+cat task_1 >> task_2
+head task_1 >> task_2
+# 5.4  Create a directory in “/tmp/yes/this/is/temp/directory” with a one command.
+mkdir -p /tmp/yes/this/is/temp/directory
+# 5.5 Create a directory in “/tmp/yes/first_dir”
+# Then create a symbolic link “/tmp/yes/link_to_first_dir” which points to the directory  “/tmp/yes/first_dir”.
+# Create an empty file task_5 inside the directory “/tmp/yes/link_to_first_dir”.
+mkdir -p /tmp/yes/first_dir
+ln -s /tmp/yes/first_dir /tmp/yes/link_to_first_dir
+touch /tmp/yes/link_to_first_dir/task_5
+# 5.6 Create a file “/tmp/yes/link_to_first_dir/test_6”. 
+# Create a symbolic link in “/tmp/yes/test_soft_link” which points to a previously created file.
+touch /tmp/yes/link_to_first_dir/test_6
+ln -s /tmp/yes/link_to_first_dir/test_6 /tmp/yes/test_soft_link
+# 5.7 Create a file "/tmp/yes/link_to_first_dir/task_7". 
+# Create a hard link in “/tmp/yes/test_hard_link” which points to a previously created file.
+touch /tmp/yes/link_to_first_dir/task_7
+ln /tmp/yes/link_to_first_dir/task_7 /tmp/yes/test_hard_link
+# 5.8 Get last 17 lines from the file “/var/log/syslog” and save output to the file task_8 
+sudo tail -n17 /var/log/syslog > task_8
+# 5.9 Create a command to find all directories in the “/tmp/yes/” directory.
+find /tmp/yes/ -type d
+# 5.10 Create a command to find all files in the “/tmp/yes/” directory.
+find /tmp/yes/
+# 5.11 Create a command to redirect error output of a fake command to the file task_11: $ not_a_real_commad
+# So, file task_11 should contain text error output of the running non-existent bash command “not_a_real_commad”.
+not_a_real_commad  2> task_11
+# 5.12 *** Find all directories in the /etc/ with name ended on .d (init.d, rc.d...) and print for each of them “Directory name.d is found” like is shown below:
+#     Directory /etc/rc2.d is found!
+# Directory /etc/cron.d is found!
+# Directory /etc/rc0.d is found!
+# ...
+# The output should be strictly the same as described.
+find /etc/ -type d -name '*.d' 2>/dev/null  | while read a; do echo Directory $a "is found!";done
